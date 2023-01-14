@@ -1,4 +1,4 @@
 import DatabaseConnectionError from './DatabaseConnectionError';
 import RequestValidationError from './RequestValidationError';
-
-export { DatabaseConnectionError, RequestValidationError };
+import CustomError from './CustomError';
+export { CustomError, DatabaseConnectionError, RequestValidationError };
