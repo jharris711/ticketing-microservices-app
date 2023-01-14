@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import 'express-async-errors';
 import { errorHandler } from './middleware';
 import {
   signinRouter,
@@ -24,12 +25,12 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 
-app.all(`*`, () => {
+app.all(`*`, async (req, res) => {
   throw new NotFoundError();
 });
 
 /**
- * Middleware
+ * Error Handler
  */
 app.use(errorHandler);
 
