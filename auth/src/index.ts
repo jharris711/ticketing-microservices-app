@@ -6,6 +6,7 @@ import {
   signupRouter,
   currentUserRouter,
 } from './routes';
+import { NotFoundError } from './errors';
 
 const port = process.env.PORT || 3000;
 
@@ -22,6 +23,10 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+app.all(`*`, () => {
+  throw new NotFoundError();
+});
 
 /**
  * Middleware
