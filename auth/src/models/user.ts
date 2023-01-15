@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Password } from '../services';
 
 /**
  * Describes the propeties that are required to
@@ -33,6 +34,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+// Handle password
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+  }
+  done();
 });
 
 // Add method to the schema
