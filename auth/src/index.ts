@@ -1,5 +1,7 @@
 import express, { json } from 'express';
 import 'express-async-errors';
+import mongoose from 'mongoose';
+
 import { errorHandler } from './middleware';
 import {
   signinRouter,
@@ -34,6 +36,16 @@ app.all(`*`, async (req, res) => {
  */
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+const start = async () => {
+  await mongoose
+    .connect(`mongodb://auth-mongo-srv:27017/auth`)
+    .then(() => {
+      console.log(`Connected to mongoDB`);
+      app.listen(port, () => {
+        console.log(`Listening on port ${port}`);
+      });
+    })
+    .catch((err) => console.error(err));
+};
+
+start();
