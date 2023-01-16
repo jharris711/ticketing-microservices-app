@@ -41,7 +41,7 @@ router.post(url, validators, async (req: Request, res: Response) => {
       id: user.id,
       email: user.email,
     },
-    'asdf'
+    process.env.JWT_KEY!
   );
 
   // Add to req.session object
