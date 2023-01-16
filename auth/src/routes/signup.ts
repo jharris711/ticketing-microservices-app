@@ -6,45 +6,48 @@ import { User } from '../models';
 
 const router = express.Router();
 
-router.post(
-  `/api/users/signup`,
-  [
-    body('email').isEmail().withMessage('Email must be vaild'),
-    body('password')
-      .isLength({ min: 4, max: 20 })
-      .withMessage('Password must be between 4 and 20 characters'),
-  ],
-  async (req: Request, res: Response) => {
-    const errors = validationResult(req);
+const url = `/api/users/signup`;
+const emailValidator = body('email')
+  .isEmail()
+  .withMessage('Email must be vaild');
+const passwordValidator = body('password')
+  .isLength({ min: 4, max: 20 })
+  .withMessage('Password must be between 4 and 20 characters');
+const validators = [emailValidator, passwordValidator];
 
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
+router.post(url, validators, async (req: Request, res: Response) => {
+  const errors = validationResult(req);
 
-    const { email, password } = req.body;
-
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      throw new BadRequestError(`Email in use`);
-    }
-
-    const user = User.build({ email, password });
-
-    await user.save();
-
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-      },
-      'asdf'
-    );
-
-    req.session = { jwt: userJwt };
-
-    res.status(201).send(user);
+  if (!errors.isEmpty()) {
+    throw new RequestValidationError(errors.array());
   }
-);
+
+  const { email, password } = req.body;
+
+  // Check for existing user
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    throw new BadRequestError(`Email in use`);
+  }
+
+  // Build a new user and save
+  const user = User.build({ email, password });
+  await user.save();
+
+  // Create the JWT
+  const userJwt = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+    },
+    'asdf'
+  );
+
+  // Add to req.session object
+  req.session = { jwt: userJwt };
+
+  res.status(201).send(user);
+});
 
 export { router as signupRouter };
