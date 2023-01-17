@@ -1,9 +1,28 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { currentUser, requireAuth } from '../middleware';
 
 const router = express.Router();
 
-router.get(`/api/users/currentuser`, (req, res) => {
-  res.send('Hi there');
-});
+/**
+ * Endpoint
+ */
+const currentUserUrl = `/api/users/currentuser`;
+
+/**
+ * Middlewares
+ */
+const middlewares = [currentUser, requireAuth];
+
+/**
+ * Handler
+ */
+const handler = async (req: Request, res: Response) => {
+  res.send(req.currentUser);
+};
+
+/**
+ * CurrentUser route
+ */
+router.get(currentUserUrl, ...middlewares, handler);
 
 export { router as currentUserRouter };
