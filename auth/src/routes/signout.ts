@@ -1,9 +1,22 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-router.post(`/api/users/signout`, (req, res) => {
-  res.send('Hi there');
-});
+/**
+ * Endpoint
+ */
+const signoutUrl = `/api/users/signout`;
+
+/**
+ * Middlewares
+ */
+
+/**
+ * Handler
+ */
+const handler = async (req: Request, res: Response) => {};
+
+router.post(signoutUrl, handler);
 
 export { router as signoutRouter };
