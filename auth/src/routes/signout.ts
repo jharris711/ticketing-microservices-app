@@ -1,6 +1,4 @@
 import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import cookieSession from 'cookie-session';
 
 const router = express.Router();
 
@@ -21,6 +19,9 @@ const handler = async (req: Request, res: Response) => {
   res.send({});
 };
 
+/**
+ * Signout route
+ */
 router.post(signoutUrl, handler);
 
 export { router as signoutRouter };

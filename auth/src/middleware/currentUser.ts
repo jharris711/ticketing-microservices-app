@@ -30,7 +30,9 @@ const currentUser = (req: Request, res: Response, next: NextFunction) => {
     ) as UserPayload;
 
     req.currentUser = payload;
-  } catch (err) {}
+  } catch (err) {
+    console.error(err);
+  }
 
   next();
 };

@@ -56,6 +56,9 @@ const handler = async (req: Request, res: Response) => {
   res.status(201).send(user);
 };
 
+/**
+ * Signup route
+ */
 router.post(createUserUrl, ...middlewares, handler);
 
 export { router as signupRouter };
