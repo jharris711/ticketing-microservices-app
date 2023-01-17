@@ -23,7 +23,8 @@ const passwordValidator = body('password')
   .trim()
   .notEmpty()
   .withMessage(`You must apply a password`);
-const validators = [bodyValidator, passwordValidator];
+
+const middlewares = [bodyValidator, passwordValidator, validateRequests];
 
 /**
  * Handler
@@ -64,6 +65,6 @@ const handler = async (req: Request, res: Response) => {
 /**
  * Sign In Route
  */
-router.post(signinUrl, validators, validateRequests, handler);
+router.post(signinUrl, ...middlewares, handler);
 
 export { router as signinRouter };

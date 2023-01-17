@@ -21,7 +21,8 @@ const emailValidator = body('email')
 const passwordValidator = body('password')
   .isLength({ min: 4, max: 20 })
   .withMessage('Password must be between 4 and 20 characters');
-const validators = [emailValidator, passwordValidator];
+
+const middlewares = [emailValidator, passwordValidator, validateRequests];
 
 /**
  * Handler
@@ -55,6 +56,6 @@ const handler = async (req: Request, res: Response) => {
   res.status(201).send(user);
 };
 
-router.post(createUserUrl, validators, validateRequests, handler);
+router.post(createUserUrl, ...middlewares, handler);
 
 export { router as signupRouter };
