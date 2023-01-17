@@ -8,6 +8,14 @@ import { Password } from '../services';
 
 const router = express.Router();
 
+/**
+ * Endpoint
+ */
+const signinUrl = `/api/users/signin`;
+
+/**
+ * Middlewares
+ */
 const bodyValidator = body('email')
   .isEmail()
   .withMessage(`Must be a valid email`);
@@ -17,44 +25,45 @@ const passwordValidator = body('password')
   .withMessage(`You must apply a password`);
 const validators = [bodyValidator, passwordValidator];
 
-const signinUrl = `/api/users/signin`;
+/**
+ * Handler
+ */
+const handler = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
-router.post(
-  signinUrl,
-  validators,
-  validateRequests,
-  async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+  const existingUser = await User.findOne({ email });
 
-    const existingUser = await User.findOne({ email });
-
-    if (!existingUser) {
-      throw new BadRequestError(`Invalid credentials`);
-    }
-
-    const passwordsMatch = await Password.compare(
-      existingUser.password,
-      password
-    );
-
-    if (!passwordsMatch) {
-      throw new BadRequestError(`Invalid credentials`);
-    }
-
-    // Create the JWT
-    const userJwt = jwt.sign(
-      {
-        id: existingUser.id,
-        email: existingUser.email,
-      },
-      process.env.JWT_KEY!
-    );
-
-    // Add to req.session object
-    req.session = { jwt: userJwt };
-
-    res.status(201).send(existingUser);
+  if (!existingUser) {
+    throw new BadRequestError(`Invalid credentials`);
   }
-);
+
+  const passwordsMatch = await Password.compare(
+    existingUser.password,
+    password
+  );
+
+  if (!passwordsMatch) {
+    throw new BadRequestError(`Invalid credentials`);
+  }
+
+  // Create the JWT
+  const userJwt = jwt.sign(
+    {
+      id: existingUser.id,
+      email: existingUser.email,
+    },
+    process.env.JWT_KEY!
+  );
+
+  // Add to req.session object
+  req.session = { jwt: userJwt };
+
+  res.status(201).send(existingUser);
+};
+
+/**
+ * Sign In Route
+ */
+router.post(signinUrl, validators, validateRequests, handler);
 
 export { router as signinRouter };
