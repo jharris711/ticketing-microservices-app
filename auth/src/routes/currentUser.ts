@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { currentUser, requireAuth } from '../middleware';
+import { currentUser } from '../middleware';
 
 const router = express.Router();
 
@@ -11,13 +11,13 @@ const currentUserUrl = `/api/users/currentuser`;
 /**
  * Middlewares
  */
-const middlewares = [currentUser, requireAuth];
+const middlewares = [currentUser];
 
 /**
  * Handler
  */
 const handler = async (req: Request, res: Response) => {
-  res.send(req.currentUser);
+  res.send({ currentUser: req.currentUser || null });
 };
 
 /**

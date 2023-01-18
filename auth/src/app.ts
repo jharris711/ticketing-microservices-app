@@ -1,8 +1,6 @@
 import express, { json } from 'express';
 import 'express-async-errors';
-import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-
 import { errorHandler } from './middleware';
 import {
   signinRouter,
@@ -21,7 +19,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    secure: process.env.NODE_ENV !== `test`,
   })
 );
 
