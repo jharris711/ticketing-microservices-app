@@ -3,7 +3,7 @@ import buildClient from '../api/buildClient';
 const LandingPage = ({ currentUser }) => {
   console.log(`currentUser:`, currentUser);
 
-  return <h1>Landing Page</h1>;
+  return currentUser ? <h1>Signed in</h1> : <h1>You are not signed in</h1>;
 };
 
 // Fetch current user before render, on the server-side
