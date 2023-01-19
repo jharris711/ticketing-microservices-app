@@ -1,4 +1,4 @@
-import buildClient from '../api/buildClient';
+import { buildClient } from '../api';
 
 const LandingPage = ({ currentUser }) => {
   console.log(`currentUser:`, currentUser);
@@ -8,6 +8,7 @@ const LandingPage = ({ currentUser }) => {
 
 // Fetch current user before render, on the server-side
 LandingPage.getInitialProps = async (context) => {
+  console.log('LANDING PAGE!');
   const client = buildClient(context);
   const { data } = await client.get('/api/users/currentuser');
 
