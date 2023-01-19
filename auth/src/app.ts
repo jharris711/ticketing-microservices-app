@@ -1,14 +1,13 @@
 import express, { json } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler } from './middleware';
+import { errorHandler, NotFoundError } from '@jheezytix/common';
 import {
   signinRouter,
   signoutRouter,
   signupRouter,
   currentUserRouter,
 } from './routes';
-import { NotFoundError } from './errors';
 
 /**
  * App setup
