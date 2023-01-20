@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@jheezytix/common';
+import { errorHandler, currentUser, NotFoundError } from '@jheezytix/common';
 import { createTicketRouter } from './routes';
 
 /**
@@ -16,6 +16,7 @@ app.use(
     secure: process.env.NODE_ENV !== `test`,
   })
 );
+app.use(currentUser);
 
 /**
  * Routes

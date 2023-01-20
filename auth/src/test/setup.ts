@@ -32,6 +32,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+// Fake a sign in (auth service only)
 global.signin = async () => {
   const email = `test@test.com`;
   const password = `password`;
