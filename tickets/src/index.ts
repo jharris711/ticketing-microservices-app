@@ -2,13 +2,17 @@ import mongoose from 'mongoose';
 import app from './app';
 
 const port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGO_URI;
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT key must be defined');
   }
+  if (!mongoURI) {
+    throw new Error(`MONGO_URI must be defined`);
+  }
   await mongoose
-    .connect(`mongodb://auth-mongo-srv:27017/auth`)
+    .connect(mongoURI)
     .then(() => {
       console.log(`Connected to mongoDB`);
       app.listen(port, () => {
