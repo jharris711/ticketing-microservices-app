@@ -2,7 +2,11 @@ import express, { json } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { errorHandler, currentUser, NotFoundError } from '@jheezytix/common';
-import { createTicketRouter, showTicketRouter } from './routes';
+import {
+  createTicketRouter,
+  showTicketRouter,
+  rootTicketRouter,
+} from './routes';
 
 /**
  * App setup
@@ -23,6 +27,7 @@ app.use(currentUser);
  */
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(rootTicketRouter);
 
 app.all(`*`, async (req, res) => {
   throw new NotFoundError();
