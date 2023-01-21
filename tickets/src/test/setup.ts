@@ -35,8 +35,10 @@ afterAll(async () => {
 
 // Fake sign in (tickets service only)
 global.signin = () => {
+  // Create an id from the mongo type
+  const id = new mongoose.Types.ObjectId().toHexString();
   // Build JSON web token payload { id, email }
-  const payload = { id: '1341v3213fq', email: `test@test.com` };
+  const payload = { id, email: `test@test.com` };
   // Create JWT
   const token = jwt.sign(payload, process.env.JWT_KEY!);
   // Build session object ( jwt: MY_JWT )

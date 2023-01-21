@@ -6,6 +6,7 @@ import {
   createTicketRouter,
   showTicketRouter,
   rootTicketRouter,
+  updateTicketRouter,
 } from './routes';
 
 /**
@@ -28,6 +29,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(rootTicketRouter);
+app.use(updateTicketRouter);
 
 app.all(`*`, async (req, res) => {
   throw new NotFoundError();
