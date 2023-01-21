@@ -1,2 +1,4 @@
 import { createTicketRouter } from './new';
-export { createTicketRouter };
+import { showTicketRouter } from './show';
+
+export { createTicketRouter, showTicketRouter };
