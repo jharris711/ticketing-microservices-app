@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret, options) {
+        // Standarize ID in response
         ret.id = ret._id;
         delete ret._id;
         delete ret.password;
