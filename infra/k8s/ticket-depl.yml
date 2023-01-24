@@ -16,6 +16,14 @@ spec:
         - name: tickets
           image: jharris711/tickets
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name #Generate the NATS CLIENT ID from the pod name
+            - name: NATS_URL
+              value: http://nats-srv:4222
+            - name: NATS_CLUSTER_URL
+              value: ticketing
             - name: MONGO_URI
               value: mongodb://tickets-mongo-srv:27017/tickets
             - name: JWT_KEY
