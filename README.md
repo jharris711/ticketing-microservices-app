@@ -1,3 +1,5 @@
+[Common middlewares NPM package](https://www.npmjs.com/package/@jheezytix/common)
+
 # Services
 
 - **AUTH**: Everything related to user signup/signin/signout
