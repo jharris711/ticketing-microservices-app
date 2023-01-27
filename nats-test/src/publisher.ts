@@ -19,7 +19,7 @@ stan.on(`connect`, async () => {
   await publisher.publish({
     id: `123`,
     title: `Concert`,
-    price: `20`,
+    price: 20,
   });
 });
 
