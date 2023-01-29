@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import app from './app';
 import natsWrapper from './natsWrapper';
+import {
+  TicketCreatedListener,
+  TicketUpdatedListener,
+} from './events/listeners';
 
 const port = process.env.PORT || 3000;
 const jwtKey = process.env.JWT_KEY;
@@ -45,6 +49,9 @@ const start = async () => {
   process.on(`SIGTERM`, () => {
     natsWrapper.client.close();
   });
+
+  new TicketCreatedListener(natsWrapper.client).listen();
+  new TicketUpdatedListener(natsWrapper.client).listen();
 
   /**
    * Mongoose
