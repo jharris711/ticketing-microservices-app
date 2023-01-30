@@ -5,6 +5,7 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from '@jheezytix/common';
 import { Ticket } from '../models';
 import natsWrapper from '../natsWrapper';
@@ -29,6 +30,9 @@ router.put(
     const ticket = await Ticket.findById(req.params.id);
     if (!ticket) throw new NotFoundError();
 
+    if (ticket.orderId)
+      throw new BadRequestError(`Ticket is reserved. Cannot edit.`);
+
     // Make sure use owns ticket before applying updates
     const notAuthorized = ticket.userId !== req.currentUser!.id;
     if (notAuthorized) throw new NotAuthorizedError();
@@ -44,6 +48,7 @@ router.put(
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
 
     res.send(ticket);
