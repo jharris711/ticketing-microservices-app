@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import app from './app';
 import natsWrapper from './natsWrapper';
+import { OrderCreatedListener, OrderCancelledListener } from './events';
 
 const port = process.env.PORT || 3000;
 const jwtKey = process.env.JWT_KEY;
@@ -33,6 +34,11 @@ const start = async () => {
     .connect(natsClusterId, natsClientId, natsUrl)
     .then(() => {
       console.log(`Connected to NATS`);
+      /**
+       * Create listeners
+       */
+      new OrderCreatedListener(natsWrapper.client).listen();
+      new OrderCancelledListener(natsWrapper.client).listen();
     })
     .catch((err) => console.error(err));
   natsWrapper.client.on(`close`, () => {
