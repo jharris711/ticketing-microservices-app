@@ -4,6 +4,7 @@ import natsWrapper from './natsWrapper';
 import {
   TicketCreatedListener,
   TicketUpdatedListener,
+  ExpirationCompleteListener,
 } from './events/listeners';
 
 const port = process.env.PORT || 3000;
@@ -52,6 +53,7 @@ const start = async () => {
 
   new TicketCreatedListener(natsWrapper.client).listen();
   new TicketUpdatedListener(natsWrapper.client).listen();
+  new ExpirationCompleteListener(natsWrapper.client).listen();
 
   /**
    * Mongoose
