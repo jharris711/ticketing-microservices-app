@@ -5,7 +5,7 @@ import app from '../app';
 import jwt from 'jsonwebtoken';
 
 declare global {
-  var signin: () => string[];
+  var signin: (id?: string) => string[];
 }
 
 let mongo: any;
@@ -39,11 +39,13 @@ afterAll(async () => {
 });
 
 // Fake sign in (tickets service only)
-global.signin = () => {
+global.signin = (id?: string) => {
   // Create an id from the mongo type
-  const id = new mongoose.Types.ObjectId().toHexString();
   // Build JSON web token payload { id, email }
-  const payload = { id, email: `test@test.com` };
+  const payload = {
+    id: id || new mongoose.Types.ObjectId().toHexString(),
+    email: `test@test.com`,
+  };
   // Create JWT
   const token = jwt.sign(payload, process.env.JWT_KEY!);
   // Build session object ( jwt: MY_JWT )

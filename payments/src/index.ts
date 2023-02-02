@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import app from './app';
 import natsWrapper from './natsWrapper';
-import OrderCancelledListener from './events/listeners/orderCancelledListener';
-import OrderCreatedListener from './events/listeners/orderCreatedListener';
+import { OrderCreatedListener, OrderCancelledListener } from './events';
 
 const port = process.env.PORT || 3000;
 const jwtKey = process.env.JWT_KEY;
