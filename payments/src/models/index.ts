@@ -1,2 +1,4 @@
 import Order from './order';
-export { Order };
+import Payment from './payment';
+
+export { Order, Payment };

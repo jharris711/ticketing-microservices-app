@@ -1,4 +1,8 @@
 import OrderCreatedListener from './listeners/orderCreatedListener';
 import OrderCancelledListener from './listeners/orderCancelledListener';
-
-export { OrderCreatedListener, OrderCancelledListener };
+import PaymentCreatedPublisher from './publishers/paymentCreatedPublisher';
+export {
+  OrderCreatedListener,
+  OrderCancelledListener,
+  PaymentCreatedPublisher,
+};

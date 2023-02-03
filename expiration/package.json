@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jheezytix/common": "^1.0.16",
+    "@jheezytix/common": "^1.0.17",
     "@types/bull": "^4.10.0",
     "bull": "^4.10.2",
     "node-nats-streaming": "^0.3.2",
