@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI;
 
 const start = async () => {
+  console.log(`Starting up...`);
   if (!process.env.JWT_KEY) {
     throw new Error('JWT key must be defined');
   }
