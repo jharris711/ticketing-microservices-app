@@ -11,6 +11,7 @@ const natsUrl = process.env.NATS_URL;
 const natsClusterId = process.env.NATS_CLUSTER_URL;
 
 const start = async () => {
+  console.log(`### Starting tickets service...`);
   if (!jwtKey) {
     throw new Error('JWT key must be defined');
   }
