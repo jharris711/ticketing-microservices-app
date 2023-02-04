@@ -22,10 +22,10 @@ function Signup() {
   };
 
   return (
-    <div className='p-2'>
+    <div>
       <form onSubmit={onSubmit}>
         <h1>Sign Up</h1>
-        <div className='form-group my-1'>
+        <div className='form-group'>
           <label>Email Address</label>
           <input
             value={email}
@@ -34,7 +34,7 @@ function Signup() {
             className='form-control'
           />
         </div>
-        <div className='form-group my-1'>
+        <div className='form-group'>
           <label>Password</label>
           <input
             value={password}
@@ -44,7 +44,7 @@ function Signup() {
           />
         </div>
         {errors}
-        <button className='btn btn-primary my-1'>Sign Up</button>
+        <button className='btn btn-primary my-2'>Sign Up</button>
       </form>
     </div>
   );
